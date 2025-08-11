@@ -92,48 +92,50 @@ export default function Properties() {
           <div className="flex flex-col lg:flex-row gap-6">
             {/* Search Bar */}
             <div className="flex-1 relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 w-5 h-5" />
               <input
                 type="text"
                 placeholder="Search properties..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-10 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200"
+                className="w-full pl-10 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200 text-gray-900 placeholder-gray-500"
               />
             </div>
 
             {/* Location Filter */}
             <div className="relative">
-              <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+              <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 w-5 h-5" />
               <select
                 value={selectedLocation}
                 onChange={(e) => setSelectedLocation(e.target.value)}
-                className="pl-10 pr-8 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200 appearance-none cursor-pointer min-w-[200px]"
+                className="pl-10 pr-8 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200 appearance-none cursor-pointer min-w-[200px] text-gray-900"
               >
                 <option value="">All Locations</option>
                 {uniqueLocations.map((location) => (
-                  <option key={location} value={location}>{location}</option>
+                  <option key={location} value={location} className="truncate">
+                    {location.length > 25 ? `${location.substring(0, 25)}...` : location}
+                  </option>
                 ))}
               </select>
             </div>
 
             {/* Price Range */}
             <div className="flex items-center space-x-2">
-              <DollarSign className="text-gray-400 w-5 h-5" />
+              <DollarSign className="text-gray-500 w-5 h-5" />
               <input
                 type="number"
                 placeholder="Min"
                 value={priceRange[0]}
                 onChange={(e) => setPriceRange([+e.target.value, priceRange[1]])}
-                className="w-24 py-3 px-3 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200"
+                className="w-24 py-3 px-3 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200 text-gray-900 placeholder-gray-500"
               />
-              <span className="text-gray-400">-</span>
+              <span className="text-gray-500">-</span>
               <input
                 type="number"
                 placeholder="Max"
                 value={priceRange[1]}
                 onChange={(e) => setPriceRange([priceRange[0], +e.target.value])}
-                className="w-24 py-3 px-3 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200"
+                className="w-24 py-3 px-3 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200 text-gray-900 placeholder-gray-500"
               />
             </div>
 
@@ -151,8 +153,8 @@ export default function Properties() {
           {showFilters && (
             <div className="mt-6 pt-6 border-t border-gray-200 grid grid-cols-1 md:grid-cols-4 gap-4">
               <div className="flex items-center space-x-2">
-                <Bed className="w-5 h-5 text-gray-400" />
-                <select className="flex-1 py-2 px-3 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                <Bed className="w-5 h-5 text-gray-500" />
+                <select className="flex-1 py-2 px-3 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900">
                   <option>Any Bedrooms</option>
                   <option>1+</option>
                   <option>2+</option>
@@ -161,8 +163,8 @@ export default function Properties() {
                 </select>
               </div>
               <div className="flex items-center space-x-2">
-                <Bath className="w-5 h-5 text-gray-400" />
-                <select className="flex-1 py-2 px-3 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                <Bath className="w-5 h-5 text-gray-500" />
+                <select className="flex-1 py-2 px-3 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900">
                   <option>Any Bathrooms</option>
                   <option>1+</option>
                   <option>2+</option>
@@ -170,8 +172,8 @@ export default function Properties() {
                 </select>
               </div>
               <div className="flex items-center space-x-2">
-                <Square className="w-5 h-5 text-gray-400" />
-                <select className="flex-1 py-2 px-3 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                <Square className="w-5 h-5 text-gray-500" />
+                <select className="flex-1 py-2 px-3 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900">
                   <option>Any Size</option>
                   <option>500+ sqft</option>
                   <option>1000+ sqft</option>
@@ -179,8 +181,8 @@ export default function Properties() {
                 </select>
               </div>
               <div className="flex items-center space-x-2">
-                <Car className="w-5 h-5 text-gray-400" />
-                <select className="flex-1 py-2 px-3 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                <Car className="w-5 h-5 text-gray-500" />
+                <select className="flex-1 py-2 px-3 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900">
                   <option>Any Parking</option>
                   <option>1+</option>
                   <option>2+</option>
@@ -193,8 +195,8 @@ export default function Properties() {
 
         {/* Controls Bar */}
         <div className="flex flex-col sm:flex-row justify-between items-center mb-8">
-          <div className="text-gray-600 mb-4 sm:mb-0">
-            Showing <span className="font-semibold">{filteredListings.length}</span> of <span className="font-semibold">{listings.length}</span> properties
+          <div className="text-gray-700 mb-4 sm:mb-0">
+            Showing <span className="font-semibold text-gray-900">{filteredListings.length}</span> of <span className="font-semibold text-gray-900">{listings.length}</span> properties
           </div>
           
           <div className="flex items-center space-x-4">
@@ -202,7 +204,7 @@ export default function Properties() {
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value)}
-              className="py-2 px-3 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200"
+              className="py-2 px-3 bg-white border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200 text-gray-900"
             >
               <option value="newest">Newest First</option>
               <option value="oldest">Oldest First</option>
@@ -215,7 +217,7 @@ export default function Properties() {
               <button
                 onClick={() => setViewMode('grid')}
                 className={`p-2 rounded-md transition-colors duration-200 ${
-                  viewMode === 'grid' ? 'bg-white text-blue-600 shadow-sm' : 'text-gray-600 hover:text-gray-900'
+                  viewMode === 'grid' ? 'bg-white text-blue-600 shadow-sm' : 'text-gray-700 hover:text-gray-900'
                 }`}
               >
                 <Grid3X3 className="w-5 h-5" />
@@ -223,7 +225,7 @@ export default function Properties() {
               <button
                 onClick={() => setViewMode('list')}
                 className={`p-2 rounded-md transition-colors duration-200 ${
-                  viewMode === 'list' ? 'bg-white text-blue-600 shadow-sm' : 'text-gray-600 hover:text-gray-900'
+                  viewMode === 'list' ? 'bg-white text-blue-600 shadow-sm' : 'text-gray-700 hover:text-gray-900'
                 }`}
               >
                 <List className="w-5 h-5" />
@@ -268,19 +270,21 @@ export default function Properties() {
                   </div>
                   
                   {/* Location Badge */}
-                  <div className="absolute bottom-4 left-4 bg-blue-600 text-white px-3 py-1 rounded-full text-sm font-medium flex items-center gap-1">
-                    <MapPin className="w-4 h-4" />
-                    {listing.location}
+                  <div className="absolute bottom-4 left-4 bg-blue-600 text-white px-3 py-1 rounded-full text-sm font-medium flex items-center gap-1 max-w-[120px]">
+                    <MapPin className="w-4 h-4 flex-shrink-0" />
+                    <span className="truncate" title={listing.location}>
+                      {listing.location}
+                    </span>
                   </div>
                 </div>
 
                 {/* Content */}
                 <div className="p-6">
-                  <h3 className="text-xl font-bold text-gray-900 group-hover:text-blue-600 transition-colors line-clamp-2 mb-3">
+                  <h3 className="text-xl font-bold text-gray-900 group-hover:text-blue-600 transition-colors truncate max-w-full mb-3" title={listing.title}>
                     {listing.title}
                   </h3>
                   
-                  <p className="text-gray-600 text-sm mb-4 line-clamp-2 leading-relaxed">
+                  <p className="text-gray-600 text-sm mb-4 leading-relaxed line-clamp-2 max-h-[3rem]" title={listing.description}>
                     {listing.description}
                   </p>
                   
@@ -320,14 +324,16 @@ export default function Properties() {
                   <div className="flex-1">
                     <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-4">
                       <div>
-                        <h3 className="text-xl font-bold text-gray-900 mb-2">{listing.title}</h3>
-                        <div className="flex items-center gap-4 text-sm text-gray-600 mb-2">
+                        <h3 className="text-xl font-bold text-gray-900 mb-2 truncate max-w-[300px]" title={listing.title}>{listing.title}</h3>
+                        <div className="flex items-center gap-4 text-sm text-gray-700 mb-2">
                           <span className="flex items-center gap-1">
-                            <MapPin className="w-4 h-4" />
-                            {listing.location}
+                            <MapPin className="w-4 h-4 text-gray-500" />
+                            <span className="truncate max-w-[150px]" title={listing.location}>
+                              {listing.location}
+                            </span>
                           </span>
                           <span className="flex items-center gap-1">
-                            <DollarSign className="w-4 h-4" />
+                            <DollarSign className="w-4 h-4 text-gray-500" />
                             ${listing.price.toLocaleString()}
                           </span>
                         </div>
@@ -344,7 +350,7 @@ export default function Properties() {
                         </Link>
                       </div>
                     </div>
-                    <p className="text-gray-600 line-clamp-2">{listing.description}</p>
+                    <p className="text-gray-700 line-clamp-2 max-h-[3rem]" title={listing.description}>{listing.description}</p>
                   </div>
                 </div>
               </div>
@@ -354,11 +360,11 @@ export default function Properties() {
 
         {filteredListings.length === 0 && (
           <div className="text-center py-16">
-            <div className="text-gray-400 mb-4">
+            <div className="text-gray-500 mb-4">
               <Search className="w-16 h-16 mx-auto" />
             </div>
-            <h3 className="text-xl font-semibold text-gray-600 mb-2">No properties found</h3>
-            <p className="text-gray-500">Try adjusting your search criteria</p>
+            <h3 className="text-xl font-semibold text-gray-700 mb-2">No properties found</h3>
+            <p className="text-gray-600">Try adjusting your search criteria</p>
           </div>
         )}
       </div>

@@ -76,7 +76,9 @@ export default function Home() {
                     >
                       <option value="">All Locations</option>
                       {uniqueLocations.map((location) => (
-                        <option key={location} value={location}>{location}</option>
+                        <option key={location} value={location} className="truncate">
+                          {location.length > 25 ? `${location.substring(0, 25)}...` : location}
+                        </option>
                       ))}
                     </select>
                   </div>
@@ -157,21 +159,23 @@ export default function Home() {
                   </div>
                   
                   {/* Location Badge */}
-                  <div className="absolute bottom-4 left-4 bg-blue-600 text-white px-3 py-1 rounded-full text-sm font-medium flex items-center gap-1">
-                    <MapPin className="w-4 h-4" />
-                    {listing.location}
+                  <div className="absolute bottom-4 left-4 bg-blue-600 text-white px-3 py-1 rounded-full text-sm font-medium flex items-center gap-1 max-w-[120px]">
+                    <MapPin className="w-4 h-4 flex-shrink-0" />
+                    <span className="truncate" title={listing.location}>
+                      {listing.location}
+                    </span>
                   </div>
                 </div>
 
                 {/* Content */}
                 <div className="p-6">
                   <div className="flex items-start justify-between mb-3">
-                    <h3 className="text-xl font-bold text-gray-900 group-hover:text-blue-600 transition-colors line-clamp-2">
+                    <h3 className="text-xl font-bold text-gray-900 group-hover:text-blue-600 transition-colors truncate max-w-full" title={listing.title}>
                       {listing.title}
                     </h3>
                   </div>
                   
-                  <p className="text-gray-600 text-sm mb-4 line-clamp-2 leading-relaxed">
+                  <p className="text-gray-600 text-sm mb-4 leading-relaxed line-clamp-2 max-h-[3rem]" title={listing.description}>
                     {listing.description}
                   </p>
                   

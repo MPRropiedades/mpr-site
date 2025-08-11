@@ -457,12 +457,14 @@ export default function ListingDetail() {
                     </div>
                   </div>
                   <div className="p-6">
-                    <h3 className="text-lg font-bold text-gray-900 mb-2 line-clamp-2">{relatedListing.title}</h3>
-                    <div className="flex items-center text-gray-600 mb-3">
-                      <MapPin className="w-4 h-4 mr-1" />
-                      <span className="text-sm">{relatedListing.location}</span>
-                    </div>
-                    <p className="text-gray-600 text-sm mb-4 line-clamp-2">{relatedListing.description}</p>
+                                         <h3 className="text-lg font-bold text-gray-900 mb-2 truncate max-w-full" title={relatedListing.title}>{relatedListing.title}</h3>
+                     <div className="flex items-center text-gray-600 mb-3">
+                       <MapPin className="w-4 h-4 mr-1" />
+                       <span className="text-sm truncate max-w-[120px]" title={relatedListing.location}>
+                         {relatedListing.location}
+                       </span>
+                     </div>
+                     <p className="text-gray-600 text-sm mb-4 line-clamp-2 max-h-[3rem]" title={relatedListing.description}>{relatedListing.description}</p>
                     <Link
                       href={`/listing/${relatedListing.id}`}
                       className="w-full bg-gradient-to-r from-blue-500 to-indigo-600 text-white py-2 px-4 rounded-lg font-semibold hover:from-blue-600 hover:to-indigo-700 transition-all duration-300 text-center block"

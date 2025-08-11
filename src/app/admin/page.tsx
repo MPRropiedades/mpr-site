@@ -16,13 +16,16 @@ import {
   Image as ImageIcon,
   X,
   Search,
-  Filter
+  Filter,
+  Save
 } from "lucide-react";
 
 export default function Admin() {
   const [user, setUser] = useState<User | null>(null);
   const [listings, setListings] = useState<Listing[]>([]);
   const [modalOpen, setModalOpen] = useState(false);
+  const [editModalOpen, setEditModalOpen] = useState(false);
+  const [editingListing, setEditingListing] = useState<Listing | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [newListing, setNewListing] = useState<ListingDTO>({
     title: "",
@@ -82,6 +85,35 @@ export default function Admin() {
         image_url: "",
       });
     }
+  };
+
+  const handleEditListing = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!editingListing) return;
+
+    const { error } = await supabase
+      .from("listings")
+      .update({
+        title: editingListing.title,
+        description: editingListing.description,
+        location: editingListing.location,
+        price: editingListing.price,
+        image_url: editingListing.image_url,
+      })
+      .eq("id", editingListing.id);
+
+    if (error) {
+      console.error("Error updating listing:", error.message);
+    } else {
+      setEditModalOpen(false);
+      setEditingListing(null);
+      fetchListings();
+    }
+  };
+
+  const openEditModal = (listing: Listing) => {
+    setEditingListing({ ...listing });
+    setEditModalOpen(true);
   };
 
   const filteredListings = listings.filter(listing =>
@@ -233,14 +265,18 @@ export default function Admin() {
                         />
                         <div>
                           <div className="text-sm font-medium text-gray-900">{listing.title}</div>
-                          <div className="text-sm text-gray-500 line-clamp-2">{listing.description}</div>
+                          <div className="text-sm text-gray-500 truncate max-w-[200px]" title={listing.description}>
+                            {listing.description}
+                          </div>
                         </div>
                       </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="flex items-center text-sm text-gray-900">
                         <MapPin className="w-4 h-4 text-gray-400 mr-2" />
-                        {listing.location}
+                        <span className="truncate max-w-[150px]" title={listing.location}>
+                          {listing.location}
+                        </span>
                       </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
@@ -248,7 +284,10 @@ export default function Admin() {
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                       <div className="flex space-x-2">
-                        <button className="bg-blue-500 text-white p-2 rounded-lg hover:bg-blue-600 transition-colors duration-200">
+                        <button 
+                          onClick={() => openEditModal(listing)}
+                          className="bg-blue-500 text-white p-2 rounded-lg hover:bg-blue-600 transition-colors duration-200"
+                        >
                           <Edit className="w-4 h-4" />
                         </button>
                         <button
@@ -290,35 +329,35 @@ export default function Admin() {
             
             <form onSubmit={handleAddListing} className="p-6 space-y-6">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Property Title</label>
+                <label className="block text-sm font-semibold text-gray-900 mb-2">Property Title</label>
                 <input
                   type="text"
                   value={newListing.title}
                   onChange={(e) => setNewListing({ ...newListing, title: e.target.value })}
-                  className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200"
+                  className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200 text-gray-900 placeholder-gray-500"
                   placeholder="Enter property title"
                   required
                 />
               </div>
               
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Location</label>
+                <label className="block text-sm font-semibold text-gray-900 mb-2">Location</label>
                 <input
                   type="text"
                   value={newListing.location}
                   onChange={(e) => setNewListing({ ...newListing, location: e.target.value })}
-                  className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200"
+                  className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200 text-gray-900 placeholder-gray-500"
                   placeholder="Enter property location"
                   required
                 />
               </div>
               
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Description</label>
+                <label className="block text-sm font-semibold text-gray-900 mb-2">Description</label>
                 <textarea
                   value={newListing.description}
                   onChange={(e) => setNewListing({ ...newListing, description: e.target.value })}
-                  className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200"
+                  className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200 text-gray-900 placeholder-gray-500"
                   placeholder="Enter property description"
                   rows={3}
                   required
@@ -326,12 +365,12 @@ export default function Admin() {
               </div>
               
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Price ($)</label>
+                <label className="block text-sm font-semibold text-gray-900 mb-2">Price ($)</label>
                 <input
                   type="number"
                   value={newListing.price}
                   onChange={(e) => setNewListing({ ...newListing, price: +e.target.value })}
-                  className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200"
+                  className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200 text-gray-900 placeholder-gray-500"
                   placeholder="Enter property price"
                   min="0"
                   required
@@ -339,12 +378,12 @@ export default function Admin() {
               </div>
               
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Image URL</label>
+                <label className="block text-sm font-semibold text-gray-900 mb-2">Image URL</label>
                 <input
                   type="url"
                   value={newListing.image_url}
                   onChange={(e) => setNewListing({ ...newListing, image_url: e.target.value })}
-                  className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200"
+                  className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200 text-gray-900 placeholder-gray-500"
                   placeholder="Enter image URL (optional)"
                 />
               </div>
@@ -362,6 +401,108 @@ export default function Admin() {
                   className="px-6 py-3 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-xl font-medium hover:from-blue-600 hover:to-indigo-700 transition-all duration-200 transform hover:scale-105"
                 >
                   Add Property
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* Modal for Editing Listings */}
+      {editModalOpen && editingListing && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center p-4 z-50">
+          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md max-h-[90vh] overflow-y-auto">
+            <div className="flex items-center justify-between p-6 border-b border-gray-200">
+              <h2 className="text-xl font-semibold text-gray-900">Edit Property</h2>
+              <button
+                onClick={() => {
+                  setEditModalOpen(false);
+                  setEditingListing(null);
+                }}
+                className="text-gray-400 hover:text-gray-600 transition-colors duration-200"
+              >
+                <X className="w-6 h-6" />
+              </button>
+            </div>
+            
+            <form onSubmit={handleEditListing} className="p-6 space-y-6">
+              <div>
+                <label className="block text-sm font-semibold text-gray-900 mb-2">Property Title</label>
+                <input
+                  type="text"
+                  value={editingListing.title}
+                  onChange={(e) => setEditingListing({ ...editingListing, title: e.target.value })}
+                  className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200 text-gray-900 placeholder-gray-500"
+                  placeholder="Enter property title"
+                  required
+                />
+              </div>
+              
+              <div>
+                <label className="block text-sm font-semibold text-gray-900 mb-2">Location</label>
+                <input
+                  type="text"
+                  value={editingListing.location}
+                  onChange={(e) => setEditingListing({ ...editingListing, location: e.target.value })}
+                  className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200 text-gray-900 placeholder-gray-500"
+                  placeholder="Enter property location"
+                  required
+                />
+              </div>
+              
+              <div>
+                <label className="block text-sm font-semibold text-gray-900 mb-2">Description</label>
+                <textarea
+                  value={editingListing.description}
+                  onChange={(e) => setEditingListing({ ...editingListing, description: e.target.value })}
+                  className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200 text-gray-900 placeholder-gray-500"
+                  placeholder="Enter property description"
+                  rows={3}
+                  required
+                />
+              </div>
+              
+              <div>
+                <label className="block text-sm font-semibold text-gray-900 mb-2">Price ($)</label>
+                <input
+                  type="number"
+                  value={editingListing.price}
+                  onChange={(e) => setEditingListing({ ...editingListing, price: +e.target.value })}
+                  className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200 text-gray-900 placeholder-gray-500"
+                  placeholder="Enter property price"
+                  min="0"
+                  required
+                />
+              </div>
+              
+              <div>
+                <label className="block text-sm font-semibold text-gray-900 mb-2">Image URL</label>
+                <input
+                  type="url"
+                  value={editingListing.image_url}
+                  onChange={(e) => setEditingListing({ ...editingListing, image_url: e.target.value })}
+                  className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200 text-gray-900 placeholder-gray-500"
+                  placeholder="Enter image URL (optional)"
+                />
+              </div>
+              
+              <div className="flex justify-end space-x-4 pt-4">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setEditModalOpen(false);
+                    setEditingListing(null);
+                  }}
+                  className="px-6 py-3 border border-gray-300 text-gray-700 rounded-xl font-medium hover:bg-gray-50 transition-colors duration-200"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="px-6 py-3 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-xl font-medium hover:from-blue-600 hover:to-indigo-700 transition-all duration-200 transform hover:scale-105 flex items-center space-x-2"
+                >
+                  <Save className="w-4 h-4" />
+                  <span>Save Changes</span>
                 </button>
               </div>
             </form>
