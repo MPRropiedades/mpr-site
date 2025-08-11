@@ -9,9 +9,6 @@ import {
   MapPin, 
   Clock, 
   Send, 
-  MessageSquare,
-  Building2,
-  Home,
   Star,
   CheckCircle
 } from "lucide-react";
@@ -98,8 +95,8 @@ export default function Contact() {
             Get In Touch
           </h1>
           <p className="text-xl md:text-2xl text-blue-100 max-w-3xl mx-auto leading-relaxed">
-            Ready to find your dream property? We're here to help. Contact us today 
-            and let's start your journey together.
+            Ready to find your dream property? We&apos;re here to help. Contact us today 
+            and let&apos;s start your journey together.
           </p>
         </div>
       </div>
@@ -114,7 +111,7 @@ export default function Contact() {
               <div className="bg-green-50 border border-green-200 rounded-2xl p-8 text-center">
                 <CheckCircle className="w-16 h-16 text-green-500 mx-auto mb-4" />
                 <h3 className="text-2xl font-bold text-green-800 mb-2">Message Sent!</h3>
-                <p className="text-green-600">Thank you for contacting us. We'll get back to you within 24 hours.</p>
+                <p className="text-green-600">Thank you for contacting us. We&apos;ll get back to you within 24 hours.</p>
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-6">
@@ -317,7 +314,7 @@ export default function Contact() {
             </div>
             <div className="bg-white rounded-2xl shadow-property p-6">
               <h3 className="text-lg font-bold text-gray-900 mb-3">How do I schedule a property viewing?</h3>
-              <p className="text-gray-600">You can schedule viewings through our contact form, by phone, or by email. We'll coordinate with the current occupants to find a convenient time.</p>
+                              <p className="text-gray-600">You can schedule viewings through our contact form, by phone, or by email. We&apos;ll coordinate with the current occupants to find a convenient time.</p>
             </div>
           </div>
         </div>
@@ -328,7 +325,7 @@ export default function Contact() {
             Ready to Start Your Property Journey?
           </h2>
           <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
-            Don't wait to find your dream property. Contact us today and let our experts guide you every step of the way.
+            Don&apos;t wait to find your dream property. Contact us today and let our experts guide you every step of the way.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a

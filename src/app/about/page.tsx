@@ -1,7 +1,6 @@
 import Navigation from "../components/Navigation";
 import Footer from "../components/Footer";
 import { 
-  Home, 
   Award, 
   Users, 
   Target, 
@@ -9,10 +8,6 @@ import {
   Shield, 
   TrendingUp, 
   Star,
-  MapPin,
-  Phone,
-  Mail,
-  Clock,
   CheckCircle,
   Building2,
   HomeIcon,
@@ -63,7 +58,7 @@ export default function About() {
     {
       icon: Target,
       title: "Client Focus",
-      description: "Your success is our success. We're committed to exceeding your expectations every time."
+      description: "Your success is our success. We&apos;re committed to exceeding your expectations every time."
     },
     {
       icon: TrendingUp,
@@ -73,7 +68,7 @@ export default function About() {
     {
       icon: Users,
       title: "Community",
-      description: "We're proud to be part of the communities we serve and invest in their growth."
+      description: "We&apos;re proud to be part of the communities we serve and invest in their growth."
     }
   ];
 
@@ -111,7 +106,7 @@ export default function About() {
             About MPR Real Estate
           </h1>
           <p className="text-xl md:text-2xl text-blue-100 max-w-3xl mx-auto leading-relaxed">
-            Your trusted partner in finding the perfect property. We've been helping families 
+            Your trusted partner in finding the perfect property. We&apos;ve been helping families 
             find their dream homes for over 15 years.
           </p>
         </div>
@@ -130,9 +125,9 @@ export default function About() {
               business has grown into one of the most trusted names in real estate.
             </p>
             <p className="text-lg text-gray-600 leading-relaxed">
-              We believe that finding the right property isn't just about four walls and a roof—it's 
+              We believe that finding the right property isn&apos;t just about four walls and a roof—it&apos;s 
               about finding a place where memories are made, families grow, and dreams come true. 
-              That's why we go above and beyond to understand your unique needs and preferences.
+              That&apos;s why we go above and beyond to understand your unique needs and preferences.
             </p>
           </div>
         </div>
@@ -246,7 +241,7 @@ export default function About() {
                 <CheckCircle className="w-6 h-6 text-green-500 mt-1 flex-shrink-0" />
                 <div>
                   <h4 className="font-semibold text-gray-900">Full-Service Support</h4>
-                  <p className="text-gray-600 text-sm">From search to closing, we're with you every step</p>
+                  <p className="text-gray-600 text-sm">From search to closing, we&apos;re with you every step</p>
                 </div>
               </div>
               <div className="flex items-start space-x-3">

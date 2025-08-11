@@ -13,24 +13,12 @@ import {
   Bath, 
   Square, 
   Car, 
-  Calendar, 
   Heart, 
   Share2, 
   Phone, 
   Mail, 
-  MessageSquare,
   Star,
-  Home as HomeIcon,
-  Building2,
-  TreePine,
-  Wifi,
-  Shield,
-  Car as CarIcon,
-  UtensilsCrossed,
-  Dumbbell,
-  CheckCircle,
-  ArrowLeft,
-  Eye
+  CheckCircle
 } from "lucide-react";
 
 export default function ListingDetail() {
@@ -39,7 +27,7 @@ export default function ListingDetail() {
   const [relatedListings, setRelatedListings] = useState<Listing[]>([]);
   const [isFavorite, setIsFavorite] = useState(false);
   const [activeImage, setActiveImage] = useState(0);
-  const [showContactForm, setShowContactForm] = useState(false);
+
   const [contactForm, setContactForm] = useState({
     name: "",
     email: "",
@@ -88,7 +76,7 @@ export default function ListingDetail() {
     setTimeout(() => {
       setIsSubmitted(false);
       setContactForm({ name: "", email: "", phone: "", message: "" });
-      setShowContactForm(false);
+
     }, 3000);
   };
 
@@ -230,7 +218,6 @@ export default function ListingDetail() {
                 </div>
                 <div className="mt-4 lg:mt-0">
                   <button
-                    onClick={() => setShowContactForm(true)}
                     className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-8 py-3 rounded-xl font-semibold hover:from-blue-600 hover:to-indigo-700 transition-all duration-300 transform hover:scale-105 shadow-lg"
                   >
                     Contact Agent
@@ -344,7 +331,7 @@ export default function ListingDetail() {
                 <div className="bg-green-50 border border-green-200 rounded-xl p-4 text-center">
                   <CheckCircle className="w-8 h-8 text-green-500 mx-auto mb-2" />
                   <p className="text-green-800 font-medium">Message Sent!</p>
-                  <p className="text-green-600 text-sm">We'll get back to you soon.</p>
+                  <p className="text-green-600 text-sm">We&apos;ll get back to you soon.</p>
                 </div>
               ) : (
                 <form onSubmit={handleContactSubmit} className="space-y-4">
@@ -387,7 +374,7 @@ export default function ListingDetail() {
                       onChange={handleContactChange}
                       required
                       rows={4}
-                      placeholder="I'm interested in this property..."
+                      placeholder="I&apos;m interested in this property..."
                       className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200 resize-none"
                     />
                   </div>

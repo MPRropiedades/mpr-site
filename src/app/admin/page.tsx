@@ -16,7 +16,6 @@ import {
   Image as ImageIcon,
   X,
   Search,
-  Filter,
   Save
 } from "lucide-react";
 

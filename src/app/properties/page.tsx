@@ -13,7 +13,6 @@ import {
   Star, 
   Heart, 
   Eye, 
-  Filter,
   Grid3X3,
   List,
   SlidersHorizontal,
